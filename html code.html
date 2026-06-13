@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern File Upload</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/statics/css/style.css">
+</head>
+<body>
+
+    <div class="upload-card">
+        <div class="upload-header">
+            <h2>Upload Your File</h2>
+            <p>Select a file to upload to the server</p>
+        </div>
+        
+        <form action="#" method="POST" enctype="multipart/form-data" class="upload-form">
+            <div class="drop-zone">
+                <div class="drop-zone-icon">📁</div>
+                <span class="drop-zone-text">Click to browse or drag file here</span>
+                <input type="file" name="file" id="file-input" required>
+            </div>
+            
+            <div id="file-info" class="file-info" style="display: none;">
+                <span id="file-name">filename.txt</span>
+            </div>
+
+            <button type="submit" class="upload-btn">Upload Now</button>
+        </form>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const fileName = document.getElementById('file-name');
+        const fileInfo = document.getElementById('file-info');
+
+        fileInput.addEventListener('change', (e) => {
+            if(e.target.files.length > 0) {
+                fileName.textContent = e.target.files[0].name;
+                fileInfo.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
