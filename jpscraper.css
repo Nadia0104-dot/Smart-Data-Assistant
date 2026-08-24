@@ -1,0 +1,374 @@
+/* ================= ROOT (BROWN LUXURY THEME) ================= */
+:root {
+  --bg: #0b0705;
+
+  /* deep browns */
+  --panel: rgba(35, 22, 16, 0.75);
+  --panel-solid: #1a0f0a;
+
+  /* borders */
+  --border: rgba(180, 120, 80, 0.14);
+
+  /* text */
+  --text: #f5e9e2;
+  --muted: #c7b2a6;
+
+  /* accents (soft orange + bronze) */
+  --accent: #d97706;
+  --accent-2: #b45309;
+  --warm: #8b5e3c;
+
+  --danger: #ef4444;
+  --success: #22c55e;
+
+  --radius: 18px;
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+}
+
+/* ================= BASE ================= */
+body {
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--text);
+
+  background:
+    radial-gradient(circle at top, #1a0f0a 0%, #0b0604 60%),
+    radial-gradient(circle at bottom right, #2a140c 0%, transparent 70%);
+}
+
+/* soft warm ambient glow */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(217,119,6,0.10), transparent 55%),
+    radial-gradient(circle at 80% 70%, rgba(180,120,80,0.08), transparent 60%);
+
+  animation: warmFloat 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes warmFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ================= NAV ================= */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+
+  border-radius: 12px;
+
+  color: var(--muted);
+  transition: 0.25s ease;
+  font-size: 14px;
+}
+
+.nav-link:hover {
+  background: rgba(217, 119, 6, 0.08);
+  color: #fff;
+  transform: translateX(3px);
+}
+
+.nav-link.active {
+  background: linear-gradient(90deg, rgba(217,119,6,0.18), transparent);
+  color: var(--accent);
+  border-left: 2px solid var(--accent);
+}
+
+/* ================= PANEL ================= */
+.panel {
+  background: linear-gradient(
+    145deg,
+    rgba(35, 22, 16, 0.85),
+    rgba(20, 12, 8, 0.95)
+  );
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+
+  padding: 14px;
+
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow);
+
+  transition: all 0.3s ease;
+}
+
+.panel:hover {
+  transform: translateY(-3px);
+  border-color: rgba(217,119,6,0.25);
+  box-shadow: 0 22px 60px rgba(0,0,0,0.6);
+}
+
+/* ================= INPUT ================= */
+.input {
+  width: 100%;
+  padding: 10px 12px;
+
+  border-radius: 12px;
+
+  background: rgba(20, 12, 8, 0.75);
+  border: 1px solid rgba(180, 120, 80, 0.18);
+
+  color: white;
+  font-size: 14px;
+
+  transition: 0.25s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(217,119,6,0.15);
+}
+
+/* ================= BUTTON (BROWN PREMIUM) ================= */
+.btn {
+  padding: 9px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+
+  cursor: pointer;
+  border: none;
+
+  background: linear-gradient(135deg, #d97706, #92400e);
+  color: #fff;
+
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* soft shine */
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 120%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.15),
+    transparent
+  );
+
+  transition: 0.6s;
+}
+
+.btn:hover::before {
+  left: 120%;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 35px rgba(217,119,6,0.25);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* ghost button */
+.btn.ghost {
+  background: transparent;
+  border: 1px solid rgba(180,120,80,0.25);
+  color: var(--muted);
+}
+
+.btn.ghost:hover {
+  background: rgba(217,119,6,0.08);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ================= PORTAL CARDS ================= */
+.portal-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px;
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+
+  transition: 0.25s;
+}
+
+.portal-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* ================= JOB CARD ================= */
+.job-card {
+  background: rgba(20, 12, 8, 0.85);
+  border: 1px solid rgba(180,120,80,0.15);
+
+  border-radius: var(--radius);
+  padding: 14px;
+
+  cursor: pointer;
+  transition: 0.3s ease;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.job-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(217,119,6,0.35);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.6);
+}
+
+/* warm top glow line */
+.job-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent),
+    var(--warm),
+    transparent
+  );
+
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.job-card:hover::before {
+  opacity: 1;
+}
+
+/* ================= CHIP ================= */
+.chip {
+  background: rgba(217,119,6,0.12);
+  padding: 3px 8px;
+  border-radius: 999px;
+
+  font-size: 11px;
+  color: var(--accent);
+
+  border: 1px solid rgba(217,119,6,0.2);
+}
+
+/* ================= STATUS ================= */
+.status-idle { color: var(--muted); }
+.status-running { color: var(--accent); }
+.status-done { color: #fbbf24; }
+.status-error { color: var(--danger); }
+
+/* ================= LOG ================= */
+#logArea {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  opacity: 0.9;
+  color: #e7c6b2;
+}
+
+/* ================= SCROLL ================= */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #d97706, #92400e);
+  border-radius: 999px;
+}
+
+/* ================= ANIMATION ================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.panel, .job-card {
+  animation: fadeIn 0.3s ease-out;
+}
+
+
+
+/* =========================
+   SIDEBAR (CLEAN + PROFESSIONAL)
+========================= */
+aside#sidebar {
+  background: rgba(3, 5, 8, 0.92);
+  border-right: 1px solid rgba(33, 197, 243, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+/* sidebar links */
+aside#sidebar nav a {
+  transition: all 0.25s ease;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+aside#sidebar nav a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at left, rgba(255, 161, 19, 0.215), transparent 60%);
+  opacity: 0;
+  transition: 0.3s;
+}
+
+aside#sidebar nav a:hover::before {
+  opacity: 1;
+}
+
+aside#sidebar nav a:hover {
+  transform: translateX(3px);
+  color: var(--brown-1);
+}
+
+/* active state */
+aside#sidebar nav a.active {
+  background: rgba(234, 148, 9, 0.922);
+  border: 1px solid rgba(234, 148, 9, 0.922);
+  color: var(--brown-1);
+  box-shadow: 0 0 18px rgba(197, 132, 34, 0.08);
+}
+
+/* hover effect */
+aside#sidebar nav a:hover {
+  transform: translateX(3px);
+  color: #e99127;
+}
+
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.4s ease;
+}
