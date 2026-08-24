@@ -1,0 +1,370 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* =========================
+   DESIGN SYSTEM (PRO DARK)
+========================= */
+:root {
+  --bg-main: #0b0f19;
+  --bg-sidebar: #111827;
+  --bg-card: #161b22;
+  --bg-hover: #1f2937;
+
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+
+  --border: #2d3748;
+
+  --accent: #09d6f1;
+  --accent-soft: rgba(34,197,94,0.12);
+
+  --danger: #ef4444;
+
+  --shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* =========================
+   GLOBAL
+========================= */
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-primary);
+}
+
+/* Remove your global white override ❗ */
+body, p, span {
+  color: var(--text-secondary);
+}
+
+h1, h2, h3 {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+/* =========================
+   SIDEBAR (MATCH CLEANER)
+========================= */
+aside {
+  width: 260px;
+  background: var(--bg-main); /* SAME as cleaner */
+  border-right: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* REMOVE global override issue */
+aside * {
+  color: inherit;
+}
+
+/* NAV LINKS */
+aside nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 12px 14px;
+  border-radius: 12px;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+/* HOVER (same as cleaner) */
+aside nav a:hover {
+  color: #fff;
+  background: rgba(34,197,94,0.1);
+}
+
+/* ACTIVE STATE */
+aside nav a.active {
+  color: #4ade80;
+  background: linear-gradient(to right, rgba(34,197,94,0.1), transparent);
+  border: 1px solid rgba(34,197,94,0.2);
+}
+
+/* =========================
+   TOPBAR
+========================= */
+header {
+  background: var(--bg-sidebar);
+  border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+  color: var(--text-primary);
+}
+
+/* =========================
+   CARD SYSTEM
+========================= */
+.upload-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: 0.25s ease;
+}
+
+.upload-card:hover {
+  transform: translateY(-3px);
+}
+
+/* =========================
+   DRAG AREA
+========================= */
+.upload-card label {
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+  background: #0f172a;
+  transition: all 0.25s ease;
+}
+
+.upload-card label:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* Fix drag text */
+#dragText {
+  color: var(--text-secondary);
+}
+
+/* =========================
+   BUTTON
+========================= */
+.btn-gradient {
+  background: var(--accent);
+  color: #052e16;
+  border-radius: 10px;
+  padding: 14px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn-gradient:hover {
+  background: #1682a3;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(34,197,94,0.4);
+}
+
+/* =========================
+   PROGRESS BAR
+========================= */
+#progressContainer {
+  background: #020617;
+}
+
+#progressBar {
+  background: var(--accent);
+}
+
+/* =========================
+   HEALTH CARDS
+========================= */
+#healthReport > div {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem;
+  transition: 0.2s ease;
+}
+
+#healthReport > div:hover {
+  border-color: var(--accent);
+  background: rgba(255,255,255,0.02);
+}
+
+#healthReport p:first-child {
+  color: var(--text-muted);
+}
+
+#healthReport p:last-child {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* =========================
+   TABLE
+========================= */
+#previewTable {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(15,23,42,0.95),
+      rgba(8,15,28,0.98)
+    );
+
+  border-radius: 18px;
+
+  border: 1px solid rgba(56,189,248,0.08);
+
+  overflow: hidden;
+
+  box-shadow:
+    0 20px 45px rgba(0,0,0,0.45);
+}
+
+#previewTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#previewTable th {
+  background: rgba(6,10,20,0.98);
+
+  color: #7dd3fc;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+
+  padding: 14px;
+
+  border-bottom: 1px solid rgba(56,189,248,0.12);
+}
+
+#previewTable td {
+  padding: 12px;
+
+  color: #cbd5e1;
+
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+#previewTable tr:nth-child(even) {
+  background: rgba(255,255,255,0.015);
+}
+
+#previewTable tr:hover td {
+  background: rgba(56,189,248,0.06);
+}
+
+
+/* =========================
+   STATES
+========================= */
+.cell-missing {
+  background: rgba(234,179,8,0.15);
+  color: #fde68a;
+}
+
+.row-duplicate {
+  background: rgba(239,68,68,0.15);
+  color: #fca5a5;
+}
+
+/* =========================
+   MESSAGES
+========================= */
+#uploadMessage.text-green-400 {
+  color: var(--accent);
+}
+
+#uploadMessage.text-red-600 {
+  color: var(--danger);
+}
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(10px);}
+  to { opacity:1; transform: translateY(0);}
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.4s ease;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width:768px){
+  #healthReport {
+    grid-template-columns: repeat(2,1fr);
+  }
+  aside {
+    width: 70px;
+  }
+}
+
+
+/* =========================
+   SIDEBAR (CLEAN + PROFESSIONAL)
+========================= */
+aside#sidebar {
+  background: rgba(3, 5, 8, 0.92);
+  border-right: 1px solid rgba(33, 197, 243, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+/* sidebar links */
+aside#sidebar nav a {
+  transition: all 0.25s ease;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+aside#sidebar nav a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at left, rgba(19, 216, 255, 0.215), transparent 60%);
+  opacity: 0;
+  transition: 0.3s;
+}
+
+aside#sidebar nav a:hover::before {
+  opacity: 1;
+}
+
+aside#sidebar nav a:hover {
+  transform: translateX(3px);
+  color: var(--blue-1);
+}
+
+/* active state */
+aside#sidebar nav a.active {
+  background: rgba(34, 159, 197, 0.847);
+  border: 1px solid rgba(9, 65, 234, 0.922);
+  color: var(--blue-1);
+  box-shadow: 0 0 18px rgba(34, 178, 197, 0.08);
+}
+
+/* hover effect */
+aside#sidebar nav a:hover {
+  transform: translateX(3px);
+  color: #4f93dc;
+}
+
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.4s ease;
+}
