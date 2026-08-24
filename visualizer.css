@@ -1,0 +1,383 @@
+/* =========================
+   GLOBAL THEME
+========================= */
+
+body {
+  background: radial-gradient(circle at top, #20120b 0%, #05070f 100%);
+  color: #e5e7eb;
+}
+
+/* smooth UI everywhere */
+* {
+  transition: all 0.25s ease;
+}
+
+/* =========================
+   MAIN PANEL LAYOUT FIX
+========================= */
+
+main.flex-1 {
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.min-h-0 {
+  min-height: 0 !important;
+}
+
+/* =========================
+   BUTTON SYSTEM (NEW UPGRADE)
+========================= */
+
+.btn {
+  background: linear-gradient(135deg, #0ea5e9, #1d4ed8, #0367a2);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 13px;
+  border: 1px solid rgba(56,189,248,0.25);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 15px 40px rgba(59,130,246,0.35);
+  border-color: rgba(56,189,248,0.5);
+}
+
+/* shimmer effect */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 120%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.2),
+    transparent
+  );
+}
+
+.btn:hover::after {
+  left: 120%;
+  transition: 0.6s ease;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(56,189,248,0.35);
+  color: #7dd3fc;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.btn-outline:hover {
+  background: rgba(56,189,248,0.08);
+  transform: translateY(-2px);
+  border-color: rgba(56,189,248,0.6);
+  box-shadow: 0 10px 25px rgba(56,189,248,0.15);
+}
+
+/* =========================
+   BIG CHART AREA (HERO)
+========================= */
+
+#vs-plot-area {
+  min-height: 520px;
+  height: 520px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 26px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(56,189,248,0.06),
+    rgba(30,58,138,0.06),
+    rgba(15,23,42,0.98)
+  );
+
+  border: 1px solid rgba(56,189,248,0.18);
+
+  box-shadow:
+    0 30px 90px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+/* floating glow */
+#vs-plot-area::before {
+  content: "";
+  position: absolute;
+  inset: -120px;
+
+  background:
+    radial-gradient(circle at 30% 20%, rgba(56,189,248,0.18), transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(59,130,246,0.12), transparent 60%);
+
+  animation: floatGlow 10s ease-in-out infinite;
+}
+
+@keyframes floatGlow {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-10px) scale(1.05); }
+}
+
+#vs-plot-area:hover {
+  transform: translateY(-6px);
+  border-color: rgba(56,189,248,0.35);
+  box-shadow:
+    0 40px 110px rgba(0,0,0,0.8),
+    0 0 60px rgba(56,189,248,0.12);
+}
+
+/* =========================
+   AI PANELS
+========================= */
+
+#vs-recommend,
+.preview-right {
+  min-height: 180px;
+  padding: 18px;
+  border-radius: 22px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(15,23,42,0.92),
+    rgba(8,15,28,0.96)
+  );
+
+  border: 1px solid rgba(56,189,248,0.14);
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+/* hover glow */
+#vs-recommend:hover,
+.preview-right:hover {
+  transform: translateY(-6px);
+  border-color: rgba(56,189,248,0.35);
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.6),
+    0 0 35px rgba(56,189,248,0.12);
+}
+
+#vs-recommend h3 {
+  color: #7dd3fc;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* =========================
+   DATA PREVIEW TABLE
+========================= */
+
+#vs-preview-table {
+  width: 100%;
+  overflow: auto;
+  max-height: 340px;
+
+  border-radius: 18px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(15,23,42,0.95),
+    rgba(8,15,28,0.98)
+  );
+
+  border: 1px solid rgba(56,189,248,0.12);
+}
+
+#vs-preview-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#vs-preview-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+#vs-preview-table th {
+  background: rgba(15,23,42,0.98);
+  color: #38bdf8;
+  padding: 14px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(56,189,248,0.2);
+}
+
+#vs-preview-table td {
+  padding: 13px 16px;
+  color: #cbd5e1;
+}
+
+#vs-preview-table tbody tr:hover {
+  background: rgba(56,189,248,0.08);
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+
+#vs-dashboard {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 18px;
+
+  border-radius: 26px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(12,18,35,0.98),
+    rgba(8,12,24,0.98)
+  );
+
+  border: 1px solid rgba(56,189,248,0.14);
+}
+
+#vs-dashboard > div {
+  flex: 0 0 260px;
+  min-height: 160px;
+
+  border-radius: 20px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(20,30,48,0.98),
+    rgba(12,18,30,0.98)
+  );
+
+  border: 1px solid rgba(56,189,248,0.14);
+
+  padding: 16px;
+
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+#vs-dashboard > div:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(56,189,248,0.35);
+  box-shadow:
+    0 30px 70px rgba(0,0,0,0.6),
+    0 0 35px rgba(56,189,248,0.12);
+}
+
+/* =========================
+   SCROLLBARS
+========================= */
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56,189,248,0.6) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    rgba(56,189,248,0.8),
+    rgba(30,58,138,0.6)
+  );
+  border-radius: 20px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1024px) {
+  #vs-plot-area {
+    min-height: 420px;
+    height: 420px;
+  }
+
+  #vs-dashboard {
+    flex-wrap: nowrap;
+  }
+}
+
+
+/* =========================
+   SIDEBAR (CLEAN + PROFESSIONAL)
+========================= */
+aside#sidebar {
+  background: rgba(3, 5, 8, 0.92);
+  border-right: 1px solid rgba(33, 197, 243, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+/* sidebar links */
+aside#sidebar nav a {
+  transition: all 0.25s ease;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+aside#sidebar nav a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at left, rgba(19, 216, 255, 0.215), transparent 60%);
+  opacity: 0;
+  transition: 0.3s;
+}
+
+aside#sidebar nav a:hover::before {
+  opacity: 1;
+}
+
+aside#sidebar nav a:hover {
+  transform: translateX(3px);
+  color: var(--blue-1);
+}
+
+/* active state */
+aside#sidebar nav a.active {
+  background: rgba(34, 159, 197, 0.847);
+  border: 1px solid rgba(9, 65, 234, 0.922);
+  color: var(--blue-1);
+  box-shadow: 0 0 18px rgba(34, 178, 197, 0.08);
+}
+
+/* hover effect */
+aside#sidebar nav a:hover {
+  transform: translateX(3px);
+  color: #4f93dc;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.4s ease;
+}
