@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Data Cleaner</title>
+
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Cleaner styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/cleaner.css') }}" />
+
+  <!-- subtle animations -->
+  <style>
+    .fade-in { animation: fadeIn .4s ease-out; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .glow {
+      box-shadow: 0 0 0 1px rgba(34,197,94,0.15), 0 0 25px rgba(34,197,94,0.08);
+    }
+
+    .hover-lift:hover {
+      transform: translateY(-2px);
+      transition: .2s ease;
+    }
+  </style>
+</head>
+
+<!-- GREEN VERSION -->
+<body class="flex h-screen overflow-hidden font-inter text-white relative
+bg-[radial-gradient(circle_at_top_left,#0f3b2e_0%,#06281f_25%,#041510_50%,#020617_100%)]">
+  <!-- soft background glow -->
+  <div class="absolute inset-0 pointer-events-none opacity-30 bg-[radial-gradient(circle_at_20%_20%,rgba(34,197,94,0.15),transparent_40%),radial-gradient(circle_at_80%_80%,rgba(34,197,94,0.08),transparent_40%)]"></div>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside id="sidebar"
+    class="w-64 bg-[#06110a]/85 backdrop-blur-md flex flex-col justify-between
+          border-r border-green-500/10 shadow-lg
+          shadow-[0_0_40px_rgba(0,0,0,0.7)]
+          transition-all duration-300 relative overflow-hidden">
+
+    <!-- background glow -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,197,94,0.08),transparent_45%)] pointer-events-none"></div>
+
+    <!-- TOP -->
+    <div class="relative z-10">
+
+      <!-- BRAND -->
+      <div class="px-6 py-6 flex items-center justify-between border-b border-green-900/20">
+        <h2 class="text-lg font-semibold text-white tracking-tight flex items-center gap-2">
+
+          <!-- glowing dot -->
+          <span
+            class="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_12px_rgba(34,197,94,0.8)]">
+          </span>
+
+          Smart Data Assistant
+        </h2>
+
+        <button id="sidebarToggle"
+          class="lg:hidden text-gray-400 hover:text-green-300 transition duration-200 hover:scale-110">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- NAV -->
+      <nav class="mt-5 px-3 space-y-1">
+
+        <!-- Upload -->
+        <a href="/upload"
+          class="group flex items-center gap-3 px-4 py-3 rounded-xl
+                text-gray-200 hover:text-green-200
+                hover:bg-green-500/10
+                transition-all duration-200 hover:translate-x-1">
+
+          <i class="fas fa-upload text-sm opacity-70 group-hover:opacity-100"></i>
+          <span class="text-sm tracking-wide">Upload</span>
+        </a>
+
+        <!-- ACTIVE CLEANER -->
+        <a href="/cleaner"
+          class="group flex items-center gap-3 px-4 py-3 rounded-xl
+                bg-gradient-to-r from-green-500/20 via-emerald-500/10 to-transparent
+                text-green-300 border border-green-500/20
+                shadow-[0_0_20px_rgba(34,197,94,0.08)]
+                transition-all duration-300 hover:scale-[1.02]">
+
+          <i class="fas fa-broom text-sm opacity-90 group-hover:opacity-100"></i>
+
+          <span class="text-sm font-medium tracking-wide">
+            Cleaner
+          </span>
+
+          <!-- active pulse -->
+          <span
+            class="ml-auto w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.9)]">
+          </span>
+        </a>
+
+        <!-- Visualizer -->
+        <a href="/visualizer"
+          class="group flex items-center gap-3 px-4 py-3 rounded-xl
+                text-gray-200 hover:text-green-200
+                hover:bg-green-500/10
+                transition-all duration-200 hover:translate-x-1">
+
+          <i class="fas fa-chart-line text-sm opacity-70 group-hover:opacity-100"></i>
+          <span class="text-sm tracking-wide">Visualizer</span>
+        </a>
+
+        <!-- Job Portal -->
+        <a href="/jpscraper"
+          class="group flex items-center gap-3 px-4 py-3 rounded-xl
+                text-gray-200 hover:text-green-200
+                hover:bg-green-500/10
+                transition-all duration-200 hover:translate-x-1">
+
+          <i class="fas fa-briefcase text-sm opacity-70 group-hover:opacity-100"></i>
+          <span class="text-sm tracking-wide">Job Portal Scraper</span>
+        </a>
+
+        <!-- Lead Gen -->
+        <a href="/leadgenai"
+          class="group flex items-center gap-3 px-4 py-3 rounded-xl
+                text-gray-200 hover:text-green-200
+                hover:bg-green-500/10
+                transition-all duration-200 hover:translate-x-1">
+
+          <i class="fas fa-search text-sm opacity-70 group-hover:opacity-100"></i>
+          <span class="text-sm tracking-wide">Lead Gen AI</span>
+        </a>
+
+      </nav>
+    </div>
+
+    <!-- BOTTOM USER -->
+    <div class="px-4 py-5 border-t border-green-900/20 relative z-10">
+
+      <!-- USER CARD -->
+      <div
+        class="flex items-center gap-3 px-3 py-3 rounded-xl
+              bg-[#0a1710]/80 border border-green-900/20
+              shadow-[0_0_25px_rgba(0,0,0,0.45)]
+              mb-3">
+
+        <div
+          class="w-9 h-9 rounded-full bg-green-500/15
+                flex items-center justify-center
+                border border-green-400/10">
+
+          <i class="fas fa-user text-green-300 text-sm"></i>
+        </div>
+
+        <div class="flex flex-col">
+          <span class="text-sm text-white font-medium">User</span>
+          <span class="text-xs text-green-200/60">Active</span>
+        </div>
+      </div>
+
+      <!-- PROFILE -->
+      <a href="/profile"
+        class="flex items-center gap-3 px-3 py-2 rounded-lg
+              text-gray-200 hover:text-green-200
+              hover:bg-green-500/10
+              transition-all duration-200 hover:translate-x-1">
+
+        <i class="fas fa-user text-sm"></i>
+        <span class="text-sm">Profile</span>
+      </a>
+
+      <!-- LOGOUT -->
+      <a href="/logout"
+        class="flex items-center gap-3 px-3 py-2 rounded-lg
+              text-red-300 hover:bg-red-500/10
+              transition-all duration-200 hover:translate-x-1">
+
+        <i class="fas fa-sign-out-alt text-sm"></i>
+        <span class="text-sm">Logout</span>
+      </a>
+
+    </div>
+  </aside>
+  <!-- MAIN CONTENT -->
+  <div class="flex-1 flex flex-col overflow-hidden relative z-10 animate-fadeUp">
+
+
+    <!-- TOP BAR -->
+    <header class="flex justify-between items-center px-6 py-4
+                  bg-[#071510]/75 backdrop-blur-xl
+                  border-b border-green-500/10
+                  sticky top-0 z-50
+                  shadow-[0_0_35px_rgba(34,197,94,0.08)]
+                  relative overflow-hidden">
+
+      <!-- subtle glow -->
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,197,94,0.08),transparent_40%)] pointer-events-none"></div>
+
+      <!-- LEFT -->
+      <div class="relative z-10">
+        <h1 class="text-lg font-semibold tracking-tight flex items-center gap-3">
+
+          <!-- glowing dot -->
+          <span
+            class="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse
+                  shadow-[0_0_12px_rgba(34,197,94,0.9)]">
+          </span>
+
+          <!-- title -->
+          <span
+            class="bg-gradient-to-r from-green-300 via-emerald-400 to-green-500
+                  bg-clip-text text-transparent
+                  drop-shadow-[0_0_10px_rgba(34,197,94,0.25)]">
+
+            Data Cleaner
+          </span>
+        </h1>
+
+        <!-- small subtitle -->
+        <p class="text-xs text-green-200/50 mt-1 tracking-wide">
+          AI-powered cleaning & preprocessing workspace
+        </p>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="flex items-center gap-4 relative z-10">
+
+        <!-- Loaded Dataset (compact) -->
+        <div class="flex items-center gap-2 bg-gray-800/40 border border-gray-700/40 rounded-xl px-3 py-1.5 hover:border-green-500/30 transition-all">
+
+          <div class="w-5 h-5 rounded-md bg-green-500/10 flex items-center justify-center">
+            <i class="fas fa-database text-green-400 text-[10px]"></i>
+          </div>
+
+          <span class="text-[11px] text-gray-400">Dataset:</span>
+
+          <span id="loadedFilename"
+                class="text-[11px] text-white font-medium max-w-[140px] truncate">
+            —
+          </span>
+
+          <span class="text-[9px] px-1.5 py-[1px] rounded bg-green-500/10 text-green-400 border border-green-500/20 animate-pulse ml-2">
+            Active
+          </span>
+        </div>
+
+        <!-- Quick Insights (compact) -->
+        <div class="flex items-center gap-2 bg-gray-800/40 border border-gray-700/40 rounded-xl px-3 py-1.5 hover:border-green-500/30 transition-all">
+
+          <div class="w-5 h-5 rounded-md bg-green-500/10 flex items-center justify-center">
+            <i class="fas fa-chart-simple text-green-400 text-[10px]"></i>
+          </div>
+
+          <span class="text-[11px] text-gray-400">Stats:</span>
+
+          <span id="insightText" class="text-[11px] text-white font-medium">
+            0 rows · 0 cols
+          </span>
+
+
+        </div>
+
+        <!-- EXPORT BUTTON -->
+        <button onclick="downloadCleaned()"
+          class="flex items-center gap-2 px-3 py-2 rounded-xl
+                bg-green-500/10 border border-green-500/20
+                text-green-300 hover:bg-green-500/20
+                hover:border-green-400/40
+                transition-all duration-200 hover:scale-105">
+
+          <i class="fas fa-file-export text-xs"></i>
+          <span class="text-[11px]">Export</span>
+        </button>
+        <!-- profile -->
+        <a href="/profile">
+
+          <button id="profileMenuBtn"
+            class="group flex items-center justify-center
+                  w-11 h-11 rounded-2xl
+                  bg-[#0d1f18]/90
+                  border border-green-500/10
+                  hover:border-green-400/30
+                  hover:bg-green-500/10
+                  transition-all duration-300
+                  hover:scale-105
+                  shadow-[0_0_20px_rgba(0,0,0,0.35)]">
+
+            <i
+              class="fas fa-user text-green-300 text-sm
+                    group-hover:text-green-200
+                    transition-all duration-300">
+            </i>
+
+          </button>
+
+        </a>
+
+      </div>
+    </header>
+
+
+    <!-- WORKSPACE -->
+    <main class="flex-1 p-4 pt-2 overflow-auto fade-in">
+      <div class="w-full space-y-6">
+
+
+
+        <!-- PANELS -->
+        <div class="flex flex-col xl:flex-row gap-1 mt-2 h-[calc(100vh-170px)]">
+
+          <!-- LEFT PANEL -->
+          <aside class="flex-shrink-0 w-full xl:w-64 bg-gray-800/40 rounded-2xl p-4 shadow-lg flex flex-col h-full overflow-hidden hover-lift">
+
+            <div class="flex-1 flex flex-col overflow-auto space-y-4">
+
+              <div>
+                <div class="font-semibold text-white mb-2">Cleaning Actions</div>
+
+                <div class="mr-2 mb-5 relative overflow-hidden rounded-2xl
+                bg-gradient-to-br from-[#07140f]/90 via-[#050d0a]/95 to-[#030807]/95
+                border border-green-500/20
+                shadow-[0_0_40px_rgba(34,197,94,0.12)]
+                backdrop-blur-xl p-4 transition-all duration-300 hover:scale-[1.01]">
+
+                  <!-- animated glow layer -->
+                  <div class="absolute inset-0 pointer-events-none opacity-70
+                    bg-[radial-gradient(circle_at_top,rgba(34,197,94,0.18),transparent_40%),
+                        radial-gradient(circle_at_bottom_right,rgba(16,185,129,0.10),transparent_45%)]">
+                  </div>
+
+                  <!-- header -->
+                  <div class="relative z-10 flex items-start justify-between mb-4">
+
+                    <div>
+                      <div class="flex items-center gap-2">
+
+                        <div class="w-2 h-2 rounded-full bg-green-400 animate-ping"></div>
+                        <div class="w-2 h-2 rounded-full bg-green-400 absolute animate-pulse"></div>
+
+                        <h3 class="text-white text-[15px] font-semibold tracking-wide">
+                          Dataset Summary
+                        </h3>
+                      </div>
+
+                      <p class="text-[11px] text-green-200/50 mt-1">
+                        Live cleaning metrics dashboard
+                      </p>
+                    </div>
+
+                    <!-- LIVE badge -->
+                    <div class="px-3 py-1 rounded-full
+                      bg-green-500/10 border border-green-400/30
+                      text-green-300 text-[10px] font-bold tracking-[0.25em]
+                      shadow-[0_0_20px_rgba(34,197,94,0.18)]
+                      animate-pulse">
+
+                      LIVE
+                    </div>
+                  </div>
+
+                  <!-- stats cards -->
+                  <div class="relative z-10 grid grid-cols-2 gap-3">
+
+                    <!-- card template style -->
+
+
+                    <div class="p-3 rounded-xl bg-black/30 border border-green-500/10
+                      hover:border-green-400/30 transition">
+
+                      <div class="text-[10px] text-red-300/70 uppercase tracking-wider">
+                        Duplicates
+                      </div>
+                      <div id="duplicates" class="text-xl font-bold text-red-300 mt-1">0</div>
+                    </div>
+
+                    <div class="p-3 rounded-xl bg-black/30 border border-green-500/10
+                      hover:border-green-400/30 transition">
+
+                      <div class="text-[10px] text-yellow-300/70 uppercase tracking-wider">
+                        Missing
+                      </div>
+                      <div id="missingTotal" class="text-xl font-bold text-yellow-300 mt-1">0</div>
+                    </div>
+
+                    <div class="p-3 rounded-xl bg-black/30 border border-green-500/10
+                      hover:border-green-400/30 transition">
+
+                      <div class="text-[10px] text-purple-300/70 uppercase tracking-wider">
+                        Outliers
+                      </div>
+                      <div id="outliersTotal" class="text-xl font-bold text-purple-300 mt-1">0</div>
+                    </div>
+
+                    <div class="p-3 rounded-xl bg-black/30 border border-green-500/10
+                      hover:border-green-400/30 transition">
+
+                      <div class="text-[10px] text-cyan-300/70 uppercase tracking-wider">
+                        Skewed
+                      </div>
+                      <div id="skewedCount" class="text-xl font-bold text-cyan-300 mt-1">0</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-black/30 border border-green-500/10
+                      hover:border-green-400/30 transition">
+
+                      <div class="text-[10px] text-green-200/50 uppercase tracking-wider">
+                        Rows
+                      </div>
+                      <div id="rows" class="text-xl font-bold text-white mt-1">0</div>
+                    </div>
+
+                    <div class="p-3 rounded-xl bg-black/30 border border-green-500/10
+                      hover:border-green-400/30 transition">
+
+                      <div class="text-[10px] text-green-200/50 uppercase tracking-wider">
+                        Columns
+                      </div>
+                      <div id="columns" class="text-xl font-bold text-white mt-1">0</div>
+                    </div>
+
+                  </div>
+                </div>
+
+
+                <div class="flex flex-col gap-2">
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition" onclick="cleanAction('/clean/remove_duplicates')"><i class="fas fa-user-xmark mr-2"></i> Remove duplicates</button>
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition" onclick="cleanAction('/clean/drop_missing')"><i class="fas fa-trash-can mr-2"></i> Drop missing</button>
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition" onclick="cleanAction('/clean/trim_spaces')"><i class="fas fa-arrows-left-right mr-2"></i> Trim spaces</button>
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition" onclick="cleanAction('/clean/to_lowercase')"><i class="fas fa-font mr-2"></i> Lowercase</button>
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition" onclick="cleanAction('/clean/to_uppercase')"><i class="fas fa-font mr-2"></i> Uppercase</button>
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition" onclick="cleanAction('/clean/remove_special_chars')"><i class="fas fa-ban mr-2"></i> Remove special chars</button>
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition" onclick="toggleFillPanel()"><i class="fas fa-fill-drip mr-2"></i> Fill missing</button>
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition" onclick="cleanAction('/clean/normalize')"><i class="fas fa-arrows-up-down-left-right mr-2"></i> Normalize</button>
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition" onclick="cleanAction('/clean/standardize')"><i class="fas fa-percent mr-2"></i> Standardize</button>
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition" onclick="cleanAction('/clean/remove_outliers')"><i class="fas fa-burst mr-2"></i> Remove outliers</button>                  
+                </div>
+                <!-- ================= ADVANCED CLEANING ================= -->
+                <div class="flex flex-col gap-2 mt-3">
+
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition"
+                    onclick="cleanAction('/clean/remove_empty_columns')">
+                    <i class="fas fa-layer-group mr-2"></i> Remove Empty Columns
+                  </button>
+
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition"
+                    onclick="cleanAction('/clean/smart_fill_missing')">
+                    <i class="fas fa-wand-magic-sparkles mr-2"></i> Smart Fill Missing
+                  </button>
+
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition"
+                    onclick="cleanAction('/clean/knn_fill_missing')">
+                    <i class="fas fa-robot mr-2"></i> AI Fill (KNN)
+                  </button>
+
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition"
+                    onclick="cleanAction('/clean/remove_correlated')">
+                    <i class="fas fa-wave-square mr-2"></i> Remove Correlated
+                  </button>
+
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition"
+                    onclick="cleanAction('/clean/robust_scale')">
+                    <i class="fas fa-sliders mr-2"></i> Robust Scale
+                  </button>
+
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition"
+                    onclick="cleanAction('/clean/fix_dtypes')">
+                    <i class="fas fa-magic mr-2"></i> Auto Fix Data Types
+                  </button>
+
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition"
+                    onclick="cleanAction('/clean/remove_constant_columns')">
+                    <i class="fas fa-square-minus mr-2"></i> Remove Constant Columns
+                  </button>
+
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition"
+                    onclick="cleanAction('/clean/clean_column_names')">
+                    <i class="fas fa-font mr-2"></i> Clean Column Names
+                  </button>
+
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition"
+                    onclick="cleanAction('/clean/remove_html_tags')">
+                    <i class="fas fa-code mr-2"></i> Remove HTML Tags
+                  </button>
+
+                  <button class="btn-gradient text-sm py-2 hover:scale-[1.02] transition"
+                    onclick="cleanAction('/clean/remove_extra_whitespace')">
+                    <i class="fas fa-text-width mr-2"></i> Remove Extra Spaces
+                  </button>
+                  <button class="btn-outline text-sm py-2 mt-2 hover:scale-[1.02] transition" onclick="resetCleaner()"><i class="fas fa-undo mr-2"></i> Reset to uploaded</button>
+
+                </div>
+              </div>
+
+              <div id="fillPanel" class="mt-4 p-3 bg-gray-900/40 rounded-xl hidden border border-gray-700">
+                <div class="font-semibold text-white mb-1">Fill Missing Values</div>
+                <div class="flex gap-2 items-center">
+                  <select id="fillMethod" class="bg-gray-800 text-white rounded px-2 py-1 flex-1">
+                    <option value="mean">Mean (numeric)</option>
+                    <option value="median">Median (numeric)</option>
+                    <option value="mode">Mode (all)</option>
+                  </select>
+                  <button class="btn-gradient py-1 px-3 hover:scale-105 transition" onclick="doFill()">Apply</button>
+                </div>
+                <div class="text-gray-400 mt-1 text-xs">Tip: Use mode for categorical columns.</div>
+              </div>
+              <div>
+                <div class="font-semibold text-white mb-2">Columns & Types</div>
+                <div id="typesList" class="text-gray-400 text-sm overflow-auto max-h-40">Loading columns…</div>
+              </div>
+
+              <div class="mr-2 bg-gradient-to-b from-yellow-400/10 to-yellow-400/5 rounded-xl p-3 border border-yellow-400/20 hover-lift">
+                <h3 class="text-yellow-400 font-semibold mb-1">⚡ Auto-Clean (One Click)</h3>
+                <p class="text-gray-400 mb-2 text-sm">Applies all recommended cleaning steps at once.</p>
+                <button class="btn-gradient w-full py-2 mb-2" onclick="autoClean()">Run Auto-Clean</button>
+                <div id="autoCleanStatus" class="text-gray-400 text-sm mb-2">Last Auto-Clean: Pending</div>
+                <ul class="text-gray-400 text-sm space-y-1">
+                  <li>• Remove duplicates</li>
+                  <li>• Drop missing rows</li>
+                  <li>• Fill numeric missing (mean)</li>
+                  <li>• Fill categorical missing (mode)</li>
+                  <li>• Normalize numeric columns</li>
+                  <li>• Standardize numeric columns</li>
+                  <li>• Remove outliers (IQR)</li>
+                </ul>
+              </div>
+
+            </div>
+
+          </aside>
+
+          <!-- MIDDLE -->
+          <!-- <main class="flex-1 bg-gray-800/50 rounded-2xl p-4 shadow-lg flex flex-col h-full hover-lift">
+
+            <div class="flex justify-between items-center mb-2">
+              <div class="font-semibold text-white">Preview (first 100 rows)</div>
+              <div class="text-gray-400 text-sm">Missing (yellow) • Duplicate (light red)</div>
+            </div>
+
+            <div id="cleanerPreview" class="overflow-auto flex-1 rounded-xl border border-gray-700"></div>
+
+            <div class="mt-4 bg-gray-900/40 rounded-xl p-4 flex flex-col md:flex-row gap-3 items-center border border-gray-700">
+              <input id="nlQuery" class="flex-1 bg-gray-800 text-white px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Type a natural command e.g. sum Sales, trim Names">
+              <button class="btn-gradient py-2 px-4 hover:scale-105 transition" onclick="generateFormula()">Generate</button>
+              <button class="btn-outline py-2 px-4 hover:scale-105 transition" onclick="copyFormula()">Copy</button>
+              <button class="btn-outline py-2 px-4 hover:scale-105 transition" onclick="downloadFormula()">Download</button>
+              <div id="formulaResult" class="text-gray-400 text-sm mt-2 md:mt-0 flex-1">Formula result will appear here...</div>
+            </div>
+
+          </main> -->
+
+          <main class="flex-1 flex flex-col bg-gray-800/50 rounded-2xl p-4 overflow-hidden">
+
+            <div class="mb-2 font-semibold">Preview (scroll inside only)</div>
+
+            <div id="cleanerPreview"
+              class="flex-1 overflow-auto rounded-xl border border-gray-700 bg-gray-900/40">
+
+              <div class="p-4 text-gray-400">Loading preview...</div>
+
+            </div>
+
+          </main>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/cleaner.js') }}"></script>
+</body>
+</html>
