@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lead Gen AI</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/leadgenai.css') }}">
+
+  <!-- JS -->
+  <script src="{{ url_for('static', filename='js/leadgenai.js') }}" defer></script>
+</head>
+
+<body class="flex h-screen overflow-hidden font-inter text-white relative
+bg-[radial-gradient(circle_at_top_left,#2a0a3d_0%,#120a22_25%,#0b0716_55%,#05040c_100%)]">
+
+<!-- ================= SIDEBAR ================= -->
+<aside id="sidebar"
+  class="w-64 bg-[#0d0b1a]/85 backdrop-blur-md flex flex-col justify-between
+         border-r border-purple-500/10 shadow-lg
+         shadow-[0_0_40px_rgba(168,85,247,0.08)]
+         transition-all duration-300 relative overflow-hidden">
+
+  <!-- background glow -->
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.10),transparent_45%)] pointer-events-none"></div>
+
+  <!-- TOP -->
+  <div class="relative z-10">
+
+    <!-- BRAND -->
+    <div class="px-6 py-6 flex items-center justify-between border-b border-purple-900/30">
+      <h2 class="text-lg font-semibold text-white tracking-tight flex items-center gap-2">
+
+        <!-- glowing dot -->
+        <span
+          class="w-2 h-2 bg-purple-500 rounded-full animate-pulse shadow-[0_0_12px_rgba(168,85,247,0.8)]">
+        </span>
+
+        Smart Data Assistant
+      </h2>
+
+      <button id="sidebarToggle"
+        class="lg:hidden text-gray-400 hover:text-purple-300 transition duration-200 hover:scale-110">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- NAV -->
+    <nav class="mt-5 px-3 space-y-1">
+
+      <!-- Upload -->
+      <a href="/upload"
+        class="group flex items-center gap-3 px-4 py-3 rounded-xl
+               text-gray-200 hover:text-purple-200
+               hover:bg-purple-500/10
+               transition-all duration-200 hover:translate-x-1">
+
+        <i class="fas fa-upload text-sm opacity-70 group-hover:opacity-100"></i>
+        <span class="text-sm tracking-wide">Upload</span>
+      </a>
+
+      <!-- Cleaner -->
+      <a href="/cleaner"
+        class="group flex items-center gap-3 px-4 py-3 rounded-xl
+               text-gray-200 hover:text-purple-200
+               hover:bg-purple-500/10
+               transition-all duration-200 hover:translate-x-1">
+
+        <i class="fas fa-broom text-sm opacity-70 group-hover:opacity-100"></i>
+        <span class="text-sm tracking-wide">Cleaner</span>
+      </a>
+
+      <!-- Visualizer -->
+      <a href="/visualizer"
+        class="group flex items-center gap-3 px-4 py-3 rounded-xl
+               text-gray-200 hover:text-purple-200
+               hover:bg-purple-500/10
+               transition-all duration-200 hover:translate-x-1">
+
+        <i class="fas fa-chart-line text-sm opacity-70 group-hover:opacity-100"></i>
+        <span class="text-sm tracking-wide">Visualizer</span>
+      </a>
+      <a href="/jpscraper" class="group flex items-center gap-3 px-4 py-3 rounded-xl text-gray-200 hover:text-purple-200 hover:bg-purple-500/10 transition">
+        <i class="fas fa-briefcase text-sm opacity-70 group-hover:opacity-100"></i>
+        <span class="text-sm">Job Portal Scraper</span>
+      </a>
+      <!-- ACTIVE JPSCRAPER -->
+      <a href="/leadgenai"
+        class="group flex items-center gap-3 px-4 py-3 rounded-xl
+               bg-gradient-to-r from-purple-500/20 via-purple-400/10 to-transparent
+               text-purple-300 border border-purple-500/20
+               shadow-[0_0_20px_rgba(168,85,247,0.10)]
+               transition-all duration-300 hover:scale-[1.02]">
+
+        <i class="fas fas fa-search text-sm opacity-90 group-hover:opacity-100"></i>
+
+        <span class="text-sm font-medium tracking-wide">
+          Lead Gen AI
+        </span>
+
+        <!-- active pulse -->
+        <span
+          class="ml-auto w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(168,85,247,0.9)]">
+        </span>
+      </a>
+
+    </nav>
+  </div>
+
+  <!-- BOTTOM USER -->
+  <div class="px-4 py-5 border-t border-purple-900/30 relative z-10">
+
+    <!-- USER CARD -->
+    <div
+      class="flex items-center gap-3 px-3 py-3 rounded-xl
+             bg-[#120f25]/80 border border-purple-900/30
+             shadow-[0_0_25px_rgba(0,0,0,0.45)]
+             mb-3">
+
+      <div
+        class="w-9 h-9 rounded-full bg-purple-500/15
+               flex items-center justify-center
+               border border-purple-400/10">
+
+        <i class="fas fa-user text-purple-300 text-sm"></i>
+      </div>
+
+      <div class="flex flex-col">
+        <span class="text-sm text-white font-medium">User</span>
+        <span class="text-xs text-purple-200/60">Active</span>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <a href="/profile"
+      class="flex items-center gap-3 px-3 py-2 rounded-lg
+             text-gray-200 hover:text-purple-200
+             hover:bg-purple-500/10
+             transition-all duration-200 hover:translate-x-1">
+
+      <i class="fas fa-user text-sm"></i>
+      <span class="text-sm">Profile</span>
+    </a>
+
+    <!-- LOGOUT -->
+    <a href="/logout"
+      class="flex items-center gap-3 px-3 py-2 rounded-lg
+             text-red-300 hover:bg-red-500/10
+             transition-all duration-200 hover:translate-x-1">
+
+      <i class="fas fa-sign-out-alt text-sm"></i>
+      <span class="text-sm">Logout</span>
+    </a>
+
+  </div>
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+<div class="flex-1 flex flex-col overflow-hidden relative z-10 animate-fadeUp">
+
+  <!-- HEADER -->
+
+  <header class="flex justify-between items-center px-6 py-4
+                bg-[#0f0a1a]/75 backdrop-blur-xl
+                border-b border-purple-500/10
+                sticky top-0 z-50
+                shadow-[0_0_35px_rgba(168,85,247,0.08)]
+                relative overflow-hidden">
+
+    <!-- subtle glow -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(168,85,247,0.08),transparent_40%)] pointer-events-none"></div>
+
+    <!-- LEFT -->
+    <div class="relative z-10">
+      <h1 class="text-lg font-semibold tracking-tight flex items-center gap-3">
+
+        <!-- glowing dot -->
+        <span
+          class="w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse
+                shadow-[0_0_12px_rgba(168,85,247,0.9)]">
+        </span>
+
+        <!-- title -->
+        <span
+          class="bg-gradient-to-r from-purple-200 via-fuchsia-300 to-purple-500
+                bg-clip-text text-transparent
+                drop-shadow-[0_0_10px_rgba(168,85,247,0.25)]">
+
+          Lead Gen AI
+        </span>
+      </h1>
+
+      <!-- small subtitle -->
+      <p class="text-xs text-purple-200/50 mt-1 tracking-wide">
+        AI-powered Lead Genertation Portal
+      </p>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="flex items-center gap-4 relative z-10">
+
+      <div class="flex items-center gap-3">
+
+        <div id="total" class="text-lg font-semibold">0</div>
+        <div class="text-xs text-gray-400">Total</div>
+
+        <button onclick="downloadCSV()"
+          class="px-4 py-2 rounded-lg
+                bg-purple-500 hover:bg-purple-400
+                text-black font-medium transition">
+          ⬇ CSV
+        </button>
+
+        <button onclick="copyData()"
+          class="px-4 py-2 rounded-lg
+                bg-[#1a1533] border border-purple-500/20
+                text-white hover:bg-purple-500/10 transition">
+          📋 Copy
+        </button>
+
+      </div>
+      <!-- profile -->
+      <a href="/profile">
+
+        <button id="profileMenuBtn"
+          class="group flex items-center justify-center
+                w-11 h-11 rounded-2xl
+                bg-[#171022]/90
+                border border-purple-500/10
+                hover:border-purple-400/30
+                hover:bg-purple-500/10
+                transition-all duration-300
+                hover:scale-105
+                shadow-[0_0_20px_rgba(0,0,0,0.35)]">
+
+          <i
+            class="fas fa-user text-purple-300 text-sm
+                  group-hover:text-purple-200
+                  transition-all duration-300">
+          </i>
+
+        </button>
+
+      </a>
+
+    </div>
+  </header>
+  <!-- CONTENT -->
+  <main class="flex-1 grid xl:grid-cols-4 gap-4 p-4 overflow-auto">
+
+    <!-- LEFT -->
+    <section class="space-y-4">
+
+      <div class="bg-[#120f25]/60 border border-purple-900/30 rounded-2xl p-4 space-y-4">
+
+        <label class="text-sm text-gray-400 block">Google Maps URLs</label>
+
+        <textarea id="urls"
+          class="w-full h-72 bg-[#0b0716] border border-purple-900/30 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-purple-400 transition"
+          placeholder="Paste Google Maps URLs (one per line)"></textarea>
+
+        <button id="startBtn"
+          onclick="startScraping()"
+          class="w-full py-3 rounded-xl bg-purple-500 hover:bg-purple-400 text-black font-semibold transition">
+          🚀 Start Scraping
+        </button>
+
+      </div>
+
+      <div class="bg-[#120f25]/60 border border-purple-900/30 rounded-2xl p-4">
+        <div class="text-sm text-gray-400 mb-2">Status</div>
+        <div id="statusBox" class="text-purple-300 text-sm">Idle</div>
+      </div>
+
+    </section>
+
+    <!-- CENTER -->
+    <section class="xl:col-span-2 flex flex-col gap-4">
+
+      <div class="bg-[#120f25]/60 border border-purple-900/30 rounded-2xl p-4">
+        <input id="search"
+          onkeyup="filterTable()"
+          placeholder="🔍 Search scraped results..."
+          class="w-full bg-[#0b0716] border border-purple-900/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-purple-400 transition">
+      </div>
+
+      <div class="bg-[#120f25]/60 border border-purple-900/30 rounded-2xl p-4">
+        <div class="flex justify-between mb-2">
+          <span class="text-sm text-gray-400">Progress</span>
+          <span class="text-sm text-purple-300">Live</span>
+        </div>
+
+        <div class="w-full bg-[#0b0716] h-3 rounded-full overflow-hidden border border-purple-900/30">
+          <div id="progress-fill"
+            class="bg-purple-500 h-full w-0 transition-all duration-300"></div>
+        </div>
+      </div>
+
+      <div class="bg-[#120f25]/60 border border-purple-900/30 rounded-2xl p-4 flex-1 overflow-auto">
+
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="font-semibold">Results</h2>
+        </div>
+
+        <div id="results">
+          <table class="w-full text-sm text-left">
+            <thead class="sticky top-0 bg-[#120f25]">
+              <tr class="border-b border-purple-900/30 text-gray-300">
+                <th class="p-3">Name</th>
+                <th class="p-3">maps_url</th>
+                <th class="p-3">Rating</th>
+                <th class="p-3">address</th>
+                <th class="p-3">phone</th>
+                <th class="p-3">website_url</th>
+              </tr>
+            </thead>
+            <tbody id="resultsBody"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- RIGHT -->
+    <section class="flex flex-col gap-4">
+
+      <div class="bg-[#120f25]/60 border border-purple-900/30 rounded-2xl p-4 flex-1">
+        <h3 class="font-semibold mb-3">📜 Live Logs</h3>
+        <div id="logs" class="text-sm text-gray-400">No logs yet</div>
+      </div>
+
+ 
+
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
