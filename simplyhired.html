@@ -1,0 +1,255 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Job Intelligence AI Pro</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/simplyhired.css') }}">
+  <script src="{{ url_for('static', filename='js/simplyhired.js') }}" defer></script>
+</head>
+
+<body class="flex h-screen text-white bg-gradient-to-br from-gray-950 via-gray-900 to-black overflow-hidden">
+
+<!-- SIDEBAR -->
+<aside class="w-64 bg-gray-800/50 backdrop-blur-md flex flex-col justify-between border-r border-gray-800">
+
+  <div>
+    <div class="px-6 py-6 border-b border-gray-700 flex justify-between items-center">
+      <h2 class="text-lg font-semibold flex items-center gap-2">
+        <span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
+        SmartAI Suite
+      </h2>
+    </div>
+
+    <nav class="mt-5 px-3 space-y-1">
+      <a href="/upload" class="nav-link"><i class="fas fa-upload"></i> Upload</a>
+      <a href="/cleaner" class="nav-link"><i class="fas fa-broom"></i> Cleaner</a>
+      <a href="/visualizer" class="nav-link"><i class="fas fa-chart-line"></i> Visualizer</a>
+      <a href="/simplyhired" class="nav-link active"><i class="fas fa-search"></i> Job AI</a>
+    </nav>
+  </div>
+
+  <div class="px-4 py-5 border-t border-gray-700">
+    <div class="flex items-center gap-3 px-3 py-3 rounded-xl bg-gray-900/40 border border-gray-700 mb-3">
+      <div class="w-9 h-9 rounded-full bg-cyan-400/20 flex items-center justify-center">
+        <i class="fas fa-user text-cyan-400 text-sm"></i>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-sm font-medium">User</span>
+        <span class="text-xs text-gray-400">AI Pro</span>
+      </div>
+    </div>
+
+    <a href="/profile" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-800/60">
+      <i class="fas fa-user"></i> Profile
+    </a>
+
+    <a href="/logout" class="flex items-center gap-3 px-3 py-2 rounded-lg text-red-400 hover:bg-red-500/10">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+  </div>
+
+</aside>
+
+<!-- MAIN -->
+<div class="flex-1 flex flex-col">
+
+<!-- HEADER -->
+<header class="vs-header flex justify-between items-center px-6 py-3 border-b border-gray-800">
+  <div>
+    <div class="text-lg font-semibold">🤖 Job Intelligence Platform</div>
+    <div class="text-xs text-gray-400">AI-powered career system</div>
+  </div>
+
+  <div class="flex gap-2">
+    <button class="btn ghost">🧩 Extension</button>
+ 
+    <button id="clearBtn" class="btn ghost">Clear</button>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<main class="flex-1 grid grid-cols-1 xl:grid-cols-4 gap-4 p-4 overflow-auto">
+
+  
+
+<!-- LEFT PANEL -->
+<div class="panel flex flex-col gap-4">
+
+  <h3 class="font-semibold">Search & AI Controls</h3>
+
+  <input id="jobInput" class="input" placeholder="Job Title">
+  <input id="locationInput" class="input" placeholder="Location">
+
+  <!-- RESUME -->
+  <!-- RESUME / SKILLS INPUT -->
+  <textarea id="resumeText" class="input h-32 resize-none" placeholder="Paste your skills, experience, or resume text here..."></textarea>
+
+  <!-- SCRAPER OPTIONS -->
+  <div class="text-sm text-gray-400 space-y-2 border-t border-gray-700 pt-3">
+    <div class="font-medium text-gray-300 mb-1">⚙ Scraper Options</div>
+
+    <label class="flex items-center gap-2">
+      <input type="checkbox" id="fullDesc">
+      Full Description
+    </label>
+
+    <label class="flex items-center gap-2">
+      <input type="checkbox" id="mergeDuplicates">
+      Merge Duplicates
+    </label>
+
+    <label class="flex items-center gap-2">
+      <input type="checkbox" id="proxyMode">
+      Proxy Mode
+    </label>
+  </div>
+
+  <!-- AI OPTIONS -->
+  <div class="text-sm text-gray-400 space-y-2 border-t border-gray-700 pt-3">
+    <div class="font-medium text-gray-300 mb-1">🧠 AI Options</div>
+
+    <label class="flex items-center gap-2">
+      <input type="checkbox" id="aiMatch">
+      AI Match Scoring
+    </label>
+
+    <label class="flex items-center gap-2">
+      <input type="checkbox" id="salaryPredict">
+      Salary Prediction
+    </label>
+
+    <label class="flex items-center gap-2">
+      <input type="checkbox" id="skillGap">
+      Skill Gap Analysis
+    </label>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="flex flex-col gap-2 border-t border-gray-700 pt-3">
+
+    <button id="analyzeResumeBtn" class="btn">
+      📄 Analyze Skills
+    </button>
+
+    
+    <button id="scrapeBtn" class="btn primary">
+      🚀 Run Scraper
+    </button>
+
+    <button id="rankJobsBtn" class="btn">
+      🧠 Calculate Match Score
+    </button>
+
+    <button class="generateSummaryBtn" class="btn">
+      ✨ Generate Insights
+    </button>
+
+    <button id="marketBtn" class="btn">
+      📊 Market Trends
+    </button>
+
+  </div>
+
+  <div id="statusBox" class="status-box">Idle</div>
+
+</div>
+
+
+<!-- CENTER PANEL -->
+<div class="col-span-2 flex flex-col gap-4">
+
+  <!-- TABS -->
+  <div class="flex gap-2">
+    <button class="tab active">Results</button>
+    <button class="tab">Saved</button>
+    <button class="tab">Applied</button>
+  </div>
+
+  <div class="panel flex flex-col gap-3 flex-1">
+
+    <!-- STATS -->
+    <div class="flex justify-between items-center">
+      <div>
+        <div class="text-xs text-gray-400">Jobs Found</div>
+        <div id="liveCount" class="text-lg font-semibold">0</div>
+      </div>
+
+      <div class="flex gap-2">
+        <button id="stopBtn" class="btn ghost">Stop</button>
+        <button id="exportCsvBtn" class="btn-mini">CSV</button>
+        <button id="exportJsonBtn" class="btn-mini">JSON</button>
+      </div>
+    </div>
+
+    <!-- SEARCH -->
+    <input id="searchInput" class="input" placeholder="🔍 Search jobs...">
+
+    <!-- FILTERS -->
+    <div class="flex gap-2 flex-wrap">
+      <button class="filter-chip">Remote</button>
+      <button class="filter-chip">High Salary</button>
+      <button class="filter-chip">Startup</button>
+      <button class="filter-chip">Junior</button>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-bar-wrapper">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="resultsArea" class="grid md:grid-cols-2 gap-4 flex-1 overflow-auto">
+      <div class="empty-state col-span-full text-center text-gray-500">
+        AI results will appear here
+      </div>
+    </div>
+
+    <!-- LOGS -->
+    <div id="logArea" class="h-28 overflow-auto text-xs opacity-70"></div>
+
+  </div>
+
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="flex flex-col gap-4">
+
+ 
+
+  <!-- AI INSIGHTS -->
+  <div class="panel">
+    <div class="font-semibold mb-2">🧠 AI Insights</div>
+    <div id="aiSummary" class="text-sm text-gray-300">No insights yet</div>
+
+    <button class="generateSummaryBtn" class="btn-mini mt-2">
+      Generate Insights
+    </button>
+  </div>
+
+  <!-- MARKET -->
+  <div class="panel">
+    <div class="font-semibold">📊 Market Trends</div>
+    <div id="chartsContainer"></div>
+  </div>
+
+  <!-- JOB DETAILS -->
+  <div class="panel flex-1 overflow-auto">
+    <div class="font-semibold mb-2">📄 Job Details</div>
+    <div id="jobPreview">Select a job</div>
+  </div>
+
+</div>
+
+</main>
+
+</div>
+
+</body>
+</html>
+ 
