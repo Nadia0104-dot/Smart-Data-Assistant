@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Data Assistant - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="login-container animate-fadeUp">
+        <h2>Login to Smart Data Assistant</h2>
+
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+
+        <form id="loginForm" method="POST" action="{{ url_for('main.login') }}">
+            <!-- Username Field -->
+            <div class="input-wrapper">
+                <input type="text" name="username" id="username" placeholder=" " required>
+                <label for="username">Username</label>
+            </div>
+
+            <!-- Password Field -->
+            <div class="input-wrapper password-wrapper">
+                <input type="password" name="password" id="password" placeholder=" " required>
+                <label for="password">Password</label>
+                <span id="togglePassword" class="toggle-password">👁️</span>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="remember-me">
+                <input type="checkbox" name="remember" id="remember">
+                <label for="remember">Remember me</label>
+            </div>
+
+            <button type="submit" id="loginBtn">Login</button>
+        </form>
+
+        <p>Don't have an account? <a href="{{ url_for('main.register') }}">Register here</a></p>
+    </div>
+
+    <!-- JS -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const toggle = document.getElementById("togglePassword");
+            const password = document.getElementById("password");
+            const form = document.getElementById("loginForm");
+            const btn = document.getElementById("loginBtn");
+
+            // Toggle password visibility with animation
+            toggle.addEventListener("click", () => {
+                const hidden = password.type === "password";
+                password.type = hidden ? "text" : "password";
+                toggle.textContent = hidden ? "🙈" : "👁️";
+                toggle.classList.add('toggle-anim');
+                setTimeout(() => toggle.classList.remove('toggle-anim'), 300);
+            });
+
+            // Floating label focus
+            const inputs = document.querySelectorAll('.input-wrapper input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => input.classList.add('focused'));
+                input.addEventListener('blur', () => {
+                    if(!input.value) input.classList.remove('focused');
+                });
+            });
+
+            // Prevent double submit
+            form.addEventListener("submit", () => {
+                btn.innerHTML = "Signing in...";
+                btn.disabled = true;
+            });
+        });
+    </script>
+</body>
+</html>
