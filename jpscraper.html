@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Job Intelligence AI Pro</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Custom -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/jpscraper.css') }}">
+  <script src="{{ url_for('static', filename='js/jpscraper.js') }}" defer></script>
+</head>
+
+<body class="flex h-screen overflow-hidden font-inter text-white relative
+bg-[radial-gradient(circle_at_top_left,#4a1d0f_0%,#1a0d08_22%,#0b0909_45%,#050505_100%)]">
+<!-- ================= SIDEBAR ================= -->
+<aside id="sidebar"
+  class="w-64 bg-[#120d0a]/85 backdrop-blur-md flex flex-col justify-between
+         border-r border-orange-500/10 shadow-lg
+         shadow-[0_0_40px_rgba(0,0,0,0.7)]
+         transition-all duration-300 relative overflow-hidden">
+
+  <!-- background glow -->
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(251,146,60,0.08),transparent_45%)] pointer-events-none"></div>
+
+  <!-- TOP -->
+  <div class="relative z-10">
+
+    <!-- BRAND -->
+    <div class="px-6 py-6 flex items-center justify-between border-b border-orange-900/30">
+      <h2 class="text-lg font-semibold text-white tracking-tight flex items-center gap-2">
+
+        <!-- glowing dot -->
+        <span
+          class="w-2 h-2 bg-orange-400 rounded-full animate-pulse shadow-[0_0_12px_rgba(251,146,60,0.8)]">
+        </span>
+
+        Smart Data Assistant
+      </h2>
+
+      <button id="sidebarToggle"
+        class="lg:hidden text-gray-400 hover:text-orange-300 transition duration-200 hover:scale-110">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- NAV -->
+    <nav class="mt-5 px-3 space-y-1">
+
+      <!-- Upload -->
+      <a href="/upload"
+        class="group flex items-center gap-3 px-4 py-3 rounded-xl
+               text-gray-200 hover:text-orange-200
+               hover:bg-orange-500/10
+               transition-all duration-200 hover:translate-x-1">
+
+        <i class="fas fa-upload text-sm opacity-70 group-hover:opacity-100"></i>
+        <span class="text-sm tracking-wide">Upload</span>
+      </a>
+
+      <!-- Cleaner -->
+      <a href="/cleaner"
+        class="group flex items-center gap-3 px-4 py-3 rounded-xl
+               text-gray-200 hover:text-orange-200
+               hover:bg-orange-500/10
+               transition-all duration-200 hover:translate-x-1">
+
+        <i class="fas fa-broom text-sm opacity-70 group-hover:opacity-100"></i>
+        <span class="text-sm tracking-wide">Cleaner</span>
+      </a>
+
+      <!-- Visualizer -->
+      <a href="/visualizer"
+        class="group flex items-center gap-3 px-4 py-3 rounded-xl
+               text-gray-200 hover:text-orange-200
+               hover:bg-orange-500/10
+               transition-all duration-200 hover:translate-x-1">
+
+        <i class="fas fa-chart-line text-sm opacity-70 group-hover:opacity-100"></i>
+        <span class="text-sm tracking-wide">Visualizer</span>
+      </a>
+
+      <!-- ACTIVE JPSCRAPER -->
+      <a href="/jpscraper"
+        class="group flex items-center gap-3 px-4 py-3 rounded-xl
+               bg-gradient-to-r from-orange-500/20 via-red-500/10 to-transparent
+               text-orange-300 border border-orange-500/20
+               shadow-[0_0_20px_rgba(251,146,60,0.08)]
+               transition-all duration-300 hover:scale-[1.02]">
+
+        <i class="fas fa-briefcase text-sm opacity-90 group-hover:opacity-100"></i>
+
+        <span class="text-sm font-medium tracking-wide">
+          Job Portal Scraper
+        </span>
+
+        <!-- active pulse -->
+        <span
+          class="ml-auto w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(251,146,60,0.9)]">
+        </span>
+      </a>
+
+      <!-- Lead Gen -->
+      <a href="/leadgenai"
+        class="group flex items-center gap-3 px-4 py-3 rounded-xl
+               text-gray-200 hover:text-orange-200
+               hover:bg-orange-500/10
+               transition-all duration-200 hover:translate-x-1">
+
+        <i class="fas fa-search text-sm opacity-70 group-hover:opacity-100"></i>
+        <span class="text-sm tracking-wide">Lead Gen AI</span>
+      </a>
+
+    </nav>
+  </div>
+
+  <!-- BOTTOM USER -->
+  <div class="px-4 py-5 border-t border-orange-900/30 relative z-10">
+
+    <!-- USER CARD -->
+    <div
+      class="flex items-center gap-3 px-3 py-3 rounded-xl
+             bg-[#1b1410]/80 border border-orange-900/30
+             shadow-[0_0_25px_rgba(0,0,0,0.45)]
+             mb-3">
+
+      <div
+        class="w-9 h-9 rounded-full bg-orange-500/15
+               flex items-center justify-center
+               border border-orange-400/10">
+
+        <i class="fas fa-user text-orange-300 text-sm"></i>
+      </div>
+
+      <div class="flex flex-col">
+        <span class="text-sm text-white font-medium">User</span>
+        <span class="text-xs text-orange-200/60">Active</span>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <a href="/profile"
+      class="flex items-center gap-3 px-3 py-2 rounded-lg
+             text-gray-200 hover:text-orange-200
+             hover:bg-orange-500/10
+             transition-all duration-200 hover:translate-x-1">
+
+      <i class="fas fa-user text-sm"></i>
+      <span class="text-sm">Profile</span>
+    </a>
+
+    <!-- LOGOUT -->
+    <a href="/logout"
+      class="flex items-center gap-3 px-3 py-2 rounded-lg
+             text-red-300 hover:bg-red-500/10
+             transition-all duration-200 hover:translate-x-1">
+
+      <i class="fas fa-sign-out-alt text-sm"></i>
+      <span class="text-sm">Logout</span>
+    </a>
+
+  </div>
+</aside>
+<!-- ================= MAIN ================= -->
+<div class="flex-1 flex flex-col animate-fadeUp">
+
+  <!-- HEADER -->
+
+
+  <header class="flex justify-between items-center px-6 py-4
+                bg-[#140d09]/75 backdrop-blur-xl
+                border-b border-amber-500/10
+                sticky top-0 z-50
+                shadow-[0_0_35px_rgba(217,119,6,0.08)]
+                relative overflow-hidden">
+
+    <!-- subtle glow -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(217,119,6,0.08),transparent_40%)] pointer-events-none"></div>
+
+    <!-- LEFT -->
+    <div class="relative z-10">
+      <h1 class="text-lg font-semibold tracking-tight flex items-center gap-3">
+
+        <!-- glowing dot -->
+        <span
+          class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse
+                shadow-[0_0_12px_rgba(217,119,6,0.9)]">
+        </span>
+
+        <!-- title -->
+        <span
+          class="bg-gradient-to-r from-amber-200 via-orange-300 to-amber-500
+                bg-clip-text text-transparent
+                drop-shadow-[0_0_10px_rgba(217,119,6,0.25)]">
+
+          Job Portal Scraper
+        </span>
+      </h1>
+
+      <!-- small subtitle -->
+      <p class="text-xs text-amber-200/50 mt-1 tracking-wide">
+        AI-powered Muli-Portal Scraper
+      </p>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="flex items-center gap-4 relative z-10">
+
+      <!-- ACTIONS -->
+      <div class="flex gap-3">
+
+ 
+
+        <!-- CLEAR BUTTON -->
+        <button id="clearBtn"
+          class="px-4 py-2 rounded-xl
+                bg-gradient-to-r
+                from-orange-500/20
+                via-red-500/10
+                to-orange-500/20
+                border border-orange-500/20
+                text-orange-200
+                hover:text-white
+                hover:border-orange-400/40
+                hover:shadow-[0_0_25px_rgba(251,146,60,0.18)]
+                transition-all duration-300
+                hover:-translate-y-0.5">
+
+          Clear
+        </button>
+
+      </div>
+      <!-- profile -->
+      <a href="/profile">
+
+        <button id="profileMenuBtn"
+          class="group flex items-center justify-center
+                w-11 h-11 rounded-2xl
+                bg-[#1b120d]/90
+                border border-amber-500/10
+                hover:border-amber-400/30
+                hover:bg-amber-500/10
+                transition-all duration-300
+                hover:scale-105
+                shadow-[0_0_20px_rgba(0,0,0,0.35)]">
+
+          <i
+            class="fas fa-user text-amber-300 text-sm
+                  group-hover:text-amber-200
+                  transition-all duration-300">
+          </i>
+
+        </button>
+
+      </a>
+
+    </div>
+  </header>
+  <!-- CONTENT -->
+  <main class="flex-1 grid xl:grid-cols-4 gap-4 p-4 overflow-auto">
+
+  <!-- ========== LEFT PANEL ========== -->
+  <!-- ========== LEFT PANEL ========== -->
+  <section class="panel space-y-4">
+
+    <!-- PORTAL BUTTONS -->
+    <div>
+      <label class="label">Select Portal</label>
+
+      <div class="grid grid-cols-2 gap-2">
+
+        <button class="portal-btn btn" data-portal="simplyhired">SimplyHired</button>
+        <button class="portal-btn btn" data-portal="wellfound">WellFound</button>
+        <button class="portal-btn btn" data-portal="ziprecruiter">ZipRecruiter</button>
+        <button class="portal-btn btn" data-portal="workable">WorkAble</button>
+        <button class="portal-btn btn col-span-2" data-portal="rozee">Rozee.pk</button>
+
+      </div>
+    </div>
+
+    <div>
+      <label class="label">Job Title</label>
+      <input id="jobInput" class="input" placeholder="e.g. Frontend Developer">
+    </div>
+
+    <div>
+      <label class="label">Location</label>
+      <input id="locationInput" class="input" placeholder="e.g. Remote / New York">
+    </div>
+
+    <!-- OPTIONS -->
+    <div class="space-y-3 border-t border-gray-800 pt-3">
+
+      <div>
+        <h3 class="section-title">⚙ Scraper</h3>
+        <div class="space-y-1 text-sm text-gray-400">
+          <label><input type="checkbox" id="fullDesc"> Full Description</label><br>
+          <label><input type="checkbox" id="aiMatch"> AI Match Scoring</label>
+        </div>
+      </div>
+      
+    <div>
+      <label class="label">Resume / Skills</label>
+      <textarea id="resumeText" class="input h-28 resize-none" placeholder="Paste resume or skills..."></textarea>
+    </div>
+
+
+    <!-- ACTION BUTTONS -->
+    <div class="flex flex-col gap-2 border-t border-gray-700 pt-3">
+
+      <button id="analyzeResumeBtn" class="btn">
+        📄 Analyze Skills
+      </button>
+
+      <button id="rankJobsBtn" class="btn">
+        🧠 Top Rank Best Match  
+      </button>
+
+    </div>
+
+
+    </div>
+
+    <div id="statusBox" class="text-xs text-gray-400">Idle</div>
+
+  </section>
+  <!-- ========== CENTER PANEL ========== -->
+  <section class="xl:col-span-2 flex flex-col gap-4">
+
+    <!-- Tabs -->
+    <div class="flex gap-2">
+      <button class="tab active">Results</button>
+      <button class="tab">Saved</button>
+      <button class="tab">Applied</button>
+    </div>
+
+    <div class="panel flex flex-col flex-1 gap-3">
+
+      <!-- Top Bar -->
+      <div class="flex justify-between items-center">
+        <div>
+          <div class="text-xs text-gray-400">Jobs Found</div>
+          <div id="liveCount" class="text-lg font-semibold">0</div>
+        </div>
+
+        <div class="flex gap-2">
+          <button id="stopBtn" class="btn ghost">Stop</button>
+          <button id="exportCsvBtn" class="btn ghost">CSV</button>
+          <button id="exportExcelBtn" class="btn ghost">Excel</button>
+          <button id="exportJsonBtn" class="btn ghost">JSON</button>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <input id="searchInput" class="input" placeholder="🔍 Search jobs...">
+
+      <!-- Progress -->
+      <div class="w-full bg-gray-800 h-2 rounded">
+        <div id="progressBar" class="bg-cyan-400 h-2 rounded w-0"></div>
+      </div>
+
+      <!-- Results -->
+      <div id="resultsArea" class="grid md:grid-cols-2 gap-4 overflow-auto flex-1">
+        <div class="col-span-full text-center text-gray-500">AI results will appear here</div>
+      </div>
+
+      <!-- Logs -->
+      <div id="logArea" class="h-28 overflow-auto text-xs text-gray-500"></div>
+
+    </div>
+
+  </section>
+
+  <!-- ========== RIGHT PANEL ========== -->
+  <section class="flex flex-col gap-4">
+
+    <!-- Insights -->
+    <div class="panel">
+      <h3 class="font-semibold mb-2">🧠 AI Insights</h3>
+      <button id="marketBtn" class="btn-mini mt-2"> Load Trends</button>
+      <div id="aiSummary" class="text-sm text-gray-300">No insights yet</div>
+      <button id="generateSummaryBtn" class="btn-mini mt-2">Generate</button>
+    </div>
+
+    <!-- Charts -->
+    <div class="panel">
+      <h3 class="font-semibold mb-2">📊 Market Trends</h3>
+      <div id="chartsContainer" class="text-xs text-gray-300"></div>
+    </div>
+
+    <!-- Job Details -->
+    <div class="panel flex-1 overflow-auto">
+      <h3 class="font-semibold mb-2">📄 Job Details</h3>
+      <div id="jobPreview" class="text-sm text-gray-300">Select a job</div>
+    </div>
+
+  </section>
+
+  </main>
+</div>
+
+</body>
+</html>
