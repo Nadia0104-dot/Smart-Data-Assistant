@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Data Uploader - Profile</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body class="flex h-screen overflow-hidden font-inter text-white bg-gradient-to-tr from-gray-900 via-gray-800 to-black">
+
+<!-- SIDEBAR -->
+  <aside id="sidebar"
+    class="w-64 bg-[#07111f]/85 backdrop-blur-md flex flex-col justify-between
+          border-r border-cyan-500/10 shadow-lg
+          shadow-[0_0_40px_rgba(0,0,0,0.7)]
+          transition-all duration-300 relative overflow-hidden">
+
+    <!-- background glow -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_45%)] pointer-events-none"></div>
+
+    <!-- TOP -->
+    <div class="relative z-10">
+
+      <!-- BRAND -->
+      <div class="px-6 py-6 flex items-center justify-between border-b border-cyan-900/20">
+        <h2 class="text-lg font-semibold text-white tracking-tight flex items-center gap-2">
+
+          <!-- glowing dot -->
+          <span
+            class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse shadow-[0_0_12px_rgba(34,211,238,0.8)]">
+          </span>
+
+          DATASENSAI
+        </h2>
+
+        <button id="sidebarToggle"
+          class="lg:hidden text-gray-400 hover:text-cyan-300 transition duration-200 hover:scale-110">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- NAV -->
+      <nav class="mt-5 px-3 space-y-1">
+
+        <!-- Upload -->
+        <a href="/upload"
+          class="group flex items-center gap-3 px-4 py-3 rounded-xl
+                text-gray-200 hover:text-cyan-200
+                hover:bg-cyan-500/10
+                transition-all duration-200 hover:translate-x-1">
+
+          <i class="fas fa-upload text-sm opacity-70 group-hover:opacity-100"></i>
+          <span class="text-sm tracking-wide">Upload</span>
+        </a>
+
+        <!-- Cleaner -->
+        <a href="/cleaner"
+          class="group flex items-center gap-3 px-4 py-3 rounded-xl
+                text-gray-200 hover:text-cyan-200
+                hover:bg-cyan-500/10
+                transition-all duration-200 hover:translate-x-1">
+
+          <i class="fas fa-broom text-sm opacity-70 group-hover:opacity-100"></i>
+          <span class="text-sm tracking-wide">Cleaner</span>
+        </a>
+
+        <!-- VISUALIZER -->
+        <a href="/visualizer"
+          class="group flex items-center gap-3 px-4 py-3 rounded-xl
+                text-gray-200 hover:text-cyan-200
+                hover:bg-cyan-500/10
+                transition-all duration-200 hover:translate-x-1">
+
+          <i class="fas fa-chart-line text-sm opacity-90 group-hover:opacity-100"></i>
+          <span class="text-sm tracking-wide">Visualizer</span>
+        </a>
+ 
+        <!-- Job Portal -->
+        <a href="/jpscraper"
+          class="group flex items-center gap-3 px-4 py-3 rounded-xl
+                text-gray-200 hover:text-cyan-200
+                hover:bg-cyan-500/10
+                transition-all duration-200 hover:translate-x-1">
+
+          <i class="fas fa-briefcase text-sm opacity-70 group-hover:opacity-100"></i>
+          <span class="text-sm tracking-wide">Job Portal Scraper</span>
+        </a>
+
+        <!-- Lead Gen -->
+        <a href="/leadgenai"
+          class="group flex items-center gap-3 px-4 py-3 rounded-xl
+                text-gray-200 hover:text-cyan-200
+                hover:bg-cyan-500/10
+                transition-all duration-200 hover:translate-x-1">
+
+          <i class="fas fa-search text-sm opacity-70 group-hover:opacity-100"></i>
+          <span class="text-sm tracking-wide">Lead Gen AI</span>
+        </a>
+
+      </nav>
+    </div>
+
+    <!-- BOTTOM USER -->
+    <div class="px-4 py-5 border-t border-cyan-900/20 relative z-10">
+
+      <!-- USER CARD -->
+      <div
+        class="flex items-center gap-3 px-3 py-3 rounded-xl
+              bg-[#0b1727]/80 border border-cyan-900/20
+              shadow-[0_0_25px_rgba(0,0,0,0.45)]
+              mb-3">
+
+        <div
+          class="w-9 h-9 rounded-full bg-cyan-500/15
+                flex items-center justify-center
+                border border-cyan-400/10">
+
+          <i class="fas fa-user text-cyan-300 text-sm"></i>
+        </div>
+
+        <div class="flex flex-col">
+          <span class="text-sm text-white font-medium">User</span>
+          <span class="text-xs text-cyan-200/60">Active</span>
+        </div>
+      </div>
+
+      <!-- PROFILE -->
+      <a href="/profile"
+        class="flex items-center gap-3 px-3 py-2 rounded-lg
+              text-gray-200 hover:text-cyan-200
+              hover:bg-cyan-500/10
+              transition-all duration-200 hover:translate-x-1">
+
+        <i class="fas fa-user text-sm"></i>
+        <span class="text-sm">Profile</span>
+      </a>
+
+      <!-- LOGOUT -->
+      <a href="/logout"
+        class="flex items-center gap-3 px-3 py-2 rounded-lg
+              text-red-300 hover:bg-red-500/10
+              transition-all duration-200 hover:translate-x-1">
+
+        <i class="fas fa-sign-out-alt text-sm"></i>
+        <span class="text-sm">Logout</span>
+      </a>
+
+    </div>
+  </aside>
+
+<!-- MAIN CONTENT -->
+<div class="flex-1 flex flex-col overflow-auto animate-fadeUp">
+
+  <!-- TOP BAR -->
+  <header class="flex justify-between items-center px-6 py-4 bg-[#111827] border-b border-gray-800 sticky top-0 z-50">
+    <h1 class="text-lg font-semibold text-white tracking-tight">Profile Dashboard</h1>
+    <div class="flex items-center gap-4 relative">
+      <a href="/profile">
+        <button id="profileMenuBtn" class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 hover:bg-gray-700 transition shadow-sm">
+          <i class="fas fa-user text-gray-300"></i>
+        </button>
+      </a>
+    </div>
+  </header>
+
+  <!-- DASHBOARD CONTENT -->
+  <main class="flex-1 p-6 overflow-auto">
+    <div class="max-w-6xl mx-auto space-y-6">
+
+      <!-- USER PROFILE CARD -->
+      <div class="glass-card animate-fadeUp flex flex-col items-center text-center gap-4 p-8">
+        <div class="w-24 h-24 rounded-full bg-green-500/20 flex items-center justify-center animate-pulse">
+          <i class="fas fa-user text-green-400 text-3xl"></i>
+        </div>
+        <h2 class="text-2xl font-semibold text-white">{{ user.username }}</h2>
+        <p class="text-gray-300">{{ user.email }}</p>
+        <p class="text-gray-400">Account Type: {{ user.account_type }}</p>
+        <p class="text-gray-400">Last Login: {{ user.last_login or 'Never' }}</p>
+        <a href="/upload" class="btn-gradient mt-3 w-full">Go to Upload</a>
+      </div>
+
+      <!-- STATS -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="stat-card bg-green-500/20">
+          <p class="font-bold text-sm">Datasets Uploaded</p>
+          <p class="text-2xl font-semibold">{{ stats.uploaded_datasets }}</p>
+        </div>
+        <div class="stat-card bg-green-500/20">
+          <p class="font-bold text-sm">Total Rows</p>
+          <p class="text-2xl font-semibold">{{ stats.total_rows }}</p>
+        </div>
+        <div class="stat-card bg-green-500/20">
+          <p class="font-bold text-sm">Total Columns</p>
+          <p class="text-2xl font-semibold">{{ stats.total_columns }}</p>
+        </div>
+        <div class="stat-card bg-green-500/20">
+          <p class="font-bold text-sm">Interactions</p>
+          <p class="text-2xl font-semibold">{{ stats.total_interactions }}</p>
+        </div>
+      </div>
+
+      <!-- ACTIVITY FEED -->
+      <div class="glass-card animate-fadeUp p-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Recent Activity</h3>
+        <div class="activity-cards max-h-80 overflow-auto flex flex-col gap-3">
+          {% for act in activities %}
+          <div class="activity-card flex justify-between items-center px-4 py-3 rounded-lg hover:shadow-md transition">
+            <div class="flex flex-col">
+              <span class="font-medium text-white">{{ act.action }}</span>
+              <span class="text-gray-400 text-sm">{{ act.datetime.strftime('%b %d, %H:%M') }} – {{ act.filename }}</span>
+            </div>
+            <span class="act-status {% if act.status == 'Success' %}success{% elif act.status == 'Failed' %}failed{% else %}pending{% endif %}">
+              {{ act.status }}
+            </span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="glass-card animate-fadeUp p-6">
+        <h3 class="text-lg font-semibold text-white mb-4">Settings</h3>
+        <form class="flex flex-col gap-4">
+          <input type="text" value="{{ user.username }}" placeholder="Name">
+          <input type="email" value="{{ user.email }}" placeholder="Email">
+          <input type="password" placeholder="New Password">
+          <select>
+            <option value="basic" {% if user.account_type == 'basic' %}selected{% endif %}>Basic</option>
+            <option value="premium" {% if user.account_type == 'premium' %}selected{% endif %}>Premium</option>
+          </select>
+          <button type="submit" class="btn-gradient w-full mt-2">Save Changes</button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+</body>
+</html>
