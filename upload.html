@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Data Uploader</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+</head>
+<body class="flex h-screen overflow-hidden font-inter text-white bg-gradient-to-tr from-gray-900 via-gray-800 to-black">
+
+<!-- ================= SIDEBAR ================= -->
+<aside id="sidebar" class="w-64 bg-gray-800/50 backdrop-blur-md flex flex-col justify-between shadow-lg border-r border-gray-800 transition-all duration-300">
+
+  <!-- TOP -->
+  <div>
+    <div class="px-6 py-6 flex items-center justify-between border-b border-gray-700">
+      <h2 class="text-lg font-semibold text-white tracking-tight flex items-center gap-2">
+        <span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
+        Smart Data Assistant
+      </h2>
+      <button id="sidebarToggle" class="lg:hidden text-gray-400 hover:text-white transition">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- NAV -->
+    <nav class="mt-5 px-3 space-y-1">
+
+      <a href="/upload" class="group flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-cyan-400/20 to-transparent text-cyan-400 border border-cyan-400/20">
+        <i class="fas fa-upload text-sm opacity-70 group-hover:opacity-100"></i>
+        <span class="text-sm tracking-wide">Upload</span>
+        <span class="ml-auto w-1.5 h-1.5 bg-cyan-400 rounded-full"></span>
+      </a>
+
+      <a href="/cleaner" class="group flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-gray-800/60 transition">
+        <i class="fas fa-broom text-sm opacity-70 group-hover:opacity-100"></i>
+        <span class="text-sm tracking-wide">Cleaner</span>
+      </a>
+
+      <a href="/visualizer" class="group flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-gray-800/60 transition">
+        <i class="fas fa-chart-line text-sm opacity-80 group-hover:opacity-100"></i>
+        <span class="text-sm font-medium tracking-wide">Visualizer</span>
+      </a>
+
+      <a href="/jpscraper" class="group flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-gray-800/60 transition">
+        <i class="fas fa-briefcase text-sm opacity-70 group-hover:opacity-100"></i>
+        <span class="text-sm tracking-wide">Job Portal Scraper</span>
+      </a>
+
+      <a href="/leadgenai" class="group flex items-center gap-3 px-4 py-3 rounded-xl text-white hover:bg-gray-800/60 transition">
+        <i class="fas fa-search text-sm opacity-70 group-hover:opacity-100"></i>
+        <span class="text-sm tracking-wide">Lead Gen AI</span>
+      </a>
+
+    </nav>
+  </div>
+
+  <!-- BOTTOM USER -->
+  <div class="px-4 py-5 border-t border-gray-700">
+
+    <div class="flex items-center gap-3 px-3 py-3 rounded-xl bg-gray-900/40 border border-gray-700 mb-3">
+      <div class="w-9 h-9 rounded-full bg-cyan-400/20 flex items-center justify-center">
+        <i class="fas fa-user text-cyan-400 text-sm"></i>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-sm text-white font-medium">User</span>
+        <span class="text-xs text-gray-400">Active</span>
+      </div>
+    </div>
+
+    <a href="/profile" class="flex items-center gap-3 px-3 py-2 rounded-lg text-white hover:bg-gray-800/60 transition">
+      <i class="fas fa-user text-sm"></i>
+      <span class="text-sm">Profile</span>
+    </a>
+
+    <a href="/logout" class="flex items-center gap-3 px-3 py-2 rounded-lg text-red-400 hover:bg-red-500/10 transition">
+      <i class="fas fa-sign-out-alt text-sm"></i>
+      <span class="text-sm">Logout</span>
+    </a>
+
+  </div>
+
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="flex-1 flex flex-col overflow-auto animate-fadeUp">
+
+  <!-- TOP BAR -->
+
+  <header class="flex justify-between items-center px-6 py-4
+                bg-[#07111f]/75 backdrop-blur-xl
+                border-b border-blue-500/10
+                sticky top-0 z-50
+                shadow-[0_0_35px_rgba(59,130,246,0.08)]
+                relative overflow-hidden">
+
+    <!-- subtle glow -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.08),transparent_40%)] pointer-events-none"></div>
+
+    <!-- LEFT -->
+    <div class="relative z-10">
+      <h1 class="text-lg font-semibold tracking-tight flex items-center gap-3">
+
+        <!-- glowing dot -->
+        <span
+          class="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse
+                shadow-[0_0_12px_rgba(59,130,246,0.9)]">
+        </span>
+
+        <!-- title -->
+        <span
+          class="bg-gradient-to-r from-blue-300 via-sky-400 to-indigo-500
+                bg-clip-text text-transparent
+                drop-shadow-[0_0_10px_rgba(59,130,246,0.25)]">
+
+          Smart Uploader
+        </span>
+      </h1>
+
+      <!-- small subtitle -->
+      <p class="text-xs text-blue-200/50 mt-1 tracking-wide">
+        AI-powered Uploading & Data Quality Stats
+      </p>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="flex items-center gap-4 relative z-10">
+
+      <!-- profile -->
+      <a href="/profile">
+
+        <button id="profileMenuBtn"
+          class="group flex items-center justify-center
+                w-11 h-11 rounded-2xl
+                bg-[#0b1729]/90
+                border border-blue-500/10
+                hover:border-blue-400/30
+                hover:bg-blue-500/10
+                transition-all duration-300
+                hover:scale-105
+                shadow-[0_0_20px_rgba(0,0,0,0.35)]">
+
+          <i
+            class="fas fa-user text-blue-300 text-sm
+                  group-hover:text-blue-200
+                  transition-all duration-300">
+          </i>
+
+        </button>
+
+      </a>
+
+    </div>
+  </header>
+  <!-- WORKSPACE -->
+  <main class="flex-1 p-6 overflow-auto">
+    <div class="max-w-6xl mx-auto space-y-6">
+
+      <!-- DESCRIPTION -->
+      <p class="text-gray-700 dark:text-gray-300 text-lg animate-fadeIn">
+        Upload, clean, and visualize your datasets effortlessly. Drag & drop files or click to select.
+      </p>
+
+      <!-- UPLOAD CARD -->
+      
+<!-- Example snippet: Upload Card with next-level enhancements -->
+      <div class="upload-card animate-fadeUp relative overflow-hidden bg-gradient-to-r from-white to-cyan-50 dark:from-gray-800 dark:to-gray-700 shadow-2xl rounded-3xl p-8 hover:shadow-3xl transition-transform duration-500">
+        <form id="uploadForm" class="flex flex-col gap-5 relative">
+          <label for="fileInput" class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-3xl p-12 cursor-pointer hover:border-cyan-400 dark:hover:border-cyan-500 transition-all duration-300 group relative">
+            <i class="fas fa-cloud-upload-alt text-6xl text-cyan-500 dark:text-cyan-400 mb-4 animate-bounce group-hover:scale-110 transition-transform duration-300"></i>
+            <span id="dragText" class="text-gray-600 dark:text-gray-300 text-lg font-medium">Drag & drop file here or click to select</span>
+            <input type="file" id="fileInput" class="hidden" />
+            <span class="absolute inset-0 rounded-3xl border-2 border-dashed border-cyan-300 opacity-0 group-hover:opacity-100 animate-pulse transition-opacity"></span>
+          </label>
+          <button type="submit" class="btn-gradient w-full text-xl font-semibold py-4 rounded-3xl shadow-lg hover:shadow-2xl transition-transform duration-300 transform hover:-translate-y-1">Upload Dataset</button>
+          <div id="progressContainer" class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden hidden mt-3">
+            <div id="progressBar" class="h-3 w-0 bg-gradient-to-r from-cyan-500 to-blue-500 transition-all rounded-full"></div>
+          </div>
+          <div id="uploadMessage" class="hidden text-center text-lg font-semibold mt-2"></div>
+        </form>
+      </div>
+
+
+      <!-- HEALTH REPORT -->
+      <div id="healthReport" class="hidden grid grid-cols-4 gap-4 text-center animate-fadeIn">
+        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl p-5 text-white shadow-lg hover:shadow-2xl transition">
+          <p class="font-bold text-lg">Rows</p>
+          <p id="rows" class="text-2xl font-semibold">0</p>
+        </div>
+        <div class="bg-gradient-to-r from-green-400 to-cyan-500 rounded-2xl p-5 text-white shadow-lg hover:shadow-2xl transition">
+          <p class="font-bold text-lg">Columns</p>
+          <p id="cols" class="text-2xl font-semibold">0</p>
+        </div>
+        <div class="bg-gradient-to-r from-yellow-400 to-red-500 rounded-2xl p-5 text-white shadow-lg hover:shadow-2xl transition">
+          <p class="font-bold text-lg">Duplicates</p>
+          <p id="duplicates" class="text-2xl font-semibold">0</p>
+        </div>
+        <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-5 text-white shadow-lg hover:shadow-2xl transition">
+          <p class="font-bold text-lg">Missing %</p>
+          <p id="missing" class="text-2xl font-semibold">0%</p>
+        </div>
+      </div>
+
+      <!-- PREVIEW TABLE -->
+      <div id="previewTable" class="overflow-auto rounded-2xl shadow-2xl mt-4 animate-fadeUp"></div>
+
+    </div>
+  </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+<script src="{{ url_for('static', filename='js/upload-enhanced.js') }}"></script>
+</body>
+</html>
